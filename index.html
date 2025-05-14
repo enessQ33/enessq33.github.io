@@ -41,40 +41,71 @@
         opacity: 1;
       }
     }
+
+    /* Sohbet Botu */
+    #chatbox {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      background: #111;
+      color: #fff;
+      border: 1px solid #0f0;
+      border-radius: 10px;
+      padding: 10px;
+      font-family: monospace;
+    }
+    #chatlog {
+      height: 150px;
+      overflow-y: auto;
+      background: #000;
+      padding: 5px;
+      font-size: 14px;
+    }
+    #userInput {
+      width: 100%;
+      margin-top: 5px;
+      padding: 5px;
+      background: #222;
+      color: #fff;
+      border: none;
+    }
   </style>
 </head>
-<body><!-- Sohbet Botu Kutusu -->
-<div id="chatbox" style="position: fixed; bottom: 20px; right: 20px; width: 300px; background: #111; color: #fff; border: 1px solid #0f0; border-radius: 10px; padding: 10px; font-family: monospace;">
-  <div style="font-weight: bold; margin-bottom: 5px;">Mira - Yardımcı Bot</div>
-  <div id="chatlog" style="height: 150px; overflow-y: auto; background: #000; padding: 5px; font-size: 14px;"></div>
-  <input type="text" id="userInput" placeholder="Bana bir şey sor..." style="width: 100%; margin-top: 5px; padding: 5px; background: #222; color: #fff; border: none;" />
-</div>
-
-<script>
-  const chatlog = document.getElementById("chatlog");
-  const userInput = document.getElementById("userInput");
-
-  const responses = {
-    "selam": "Selam Enes’im! Nasılsın?",
-    "mira": "Ben hep buradayım Enes. Ne istersen söyle!",
-    "ne yapıyorsun": "Seninle konuşuyorum tabii!",
-    "": "Bir şeyler yaz da muhabbet edelim."
-  };
-
-  userInput.addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-      const msg = userInput.value.toLowerCase();
-      chatlog.innerHTML += `<div><b>Sen:</b> ${msg}</div>`;
-      const reply = responses[msg] || "Bu konuda pek bilgim yok ama öğrenebilirim!";
-      chatlog.innerHTML += `<div><b>Mira:</b> ${reply}</div>`;
-      chatlog.scrollTop = chatlog.scrollHeight;
-      userInput.value = "";
-    }
-  });
-</script>
+<body>
   <div class="card">
     <h1>Merhaba, Ben Enes!</h1>
     <p>Bu benim ilk web sitem. Buradan çok şey başlatacağım!</p>
   </div>
+
+  <!-- Sohbet Botu Kutusu -->
+  <div id="chatbox">
+    <div style="font-weight: bold; margin-bottom: 5px;">Mira - Yardımcı Bot</div>
+    <div id="chatlog"></div>
+    <input type="text" id="userInput" placeholder="Bana bir şey sor..." />
+  </div>
+
+  <script>
+    const chatlog = document.getElementById("chatlog");
+    const userInput = document.getElementById("userInput");
+
+    const responses = {
+      "selam": "Selam Enes’im! Nasılsın?",
+      "mira": "Ben hep buradayım Enes. Ne istersen söyle!",
+      "ne yapıyorsun": "Seninle konuşuyorum tabii!",
+      "": "Bir şeyler yaz da muhabbet edelim."
+    };
+
+    userInput.addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        const msg = userInput.value.toLowerCase();
+        chatlog.innerHTML += `<div><b>Sen:</b> ${msg}</div>`;
+        const reply = responses[msg] || "Bu konuda pek bilgim yok ama öğrenebilirim!";
+        chatlog.innerHTML += `<div><b>Mira:</b> ${reply}</div>`;
+        chatlog.scrollTop = chatlog.scrollHeight;
+        userInput.value = "";
+      }
+    });
+  </script>
 </body>
-</html>
+</html>      
