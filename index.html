@@ -1,233 +1,79 @@
-      <!DOCTYPE html>
-<html lang="tr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enes'in Dijital Yardımcısı</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #2c3e50, #4ca1af);
-      color: #fff;
-      font-family: 'Poppins', sans-serif;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      overflow: hidden;
-    }
-
-    .card {
-      background: rgba(34, 34, 34, 0.8);
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 15px 25px rgba(0, 255, 0, 0.2);
-      text-align: center;
-      animation: fadeIn 2s ease-in-out forwards;
-      transform: translateY(50px);
-      opacity: 0;
-      transition: all 0.3s ease;
-    }
-
-    h1 {
-      font-size: 40px;
-      color: #00e676;
-      margin-bottom: 10px;
-    }
-
-    .tabs {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-    }
-
-    .tab {
-      margin: 0 15px;
-      padding: 10px 20px;
-      background: #333;
-      color: #fff;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-
-    .tab:hover {
-      background: #00e676;
-    }
-
-    .active-tab {
-      background: #00e676;
-    }
-
-    #chatbox {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 320px;
-      background: #1a1a1a;
-      color: #fff;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 4px 10px rgba(0, 255, 0, 0.3);
-      font-family: 'Poppins', sans-serif;
-      transition: all 0.3s ease;
-    }
-
-    #chatlog {
-      height: 200px;
-      overflow-y: auto;
-      background: #000;
-      padding: 10px;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-
-    #userInput {
-      width: 100%;
-      padding: 12px;
-      background: #333;
-      border: none;
-      border-radius: 10px;
-      margin-top: 10px;
-      color: #fff;
-      font-size: 16px;
-      transition: all 0.3s ease;
-    }
-
-    #userInput:focus {
-      outline: none;
-      background: #444;
-      box-shadow: 0 0 10px #00e676;
-    }
-
-    .chat-message {
-      margin-bottom: 10px;
-    }
-
-    .chat-message span {
-      font-weight: bold;
-    }
-
-    .help-section {
-      margin-top: 20px;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-      border-radius: 15px;
-      width: 300px;
-      text-align: left;
-      font-size: 14px;
-      box-shadow: 0 4px 10px rgba(0, 255, 0, 0.3);
-    }
-
-    @keyframes fadeIn {
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    @media screen and (max-width: 768px) {
-      #chatbox {
-        width: 280px;
-        bottom: 10px;
-        right: 10px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sohbet Botu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #chatlog {
+            width: 80%;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ddd;
+            height: 400px;
+            overflow-y: scroll;
+            background-color: #f9f9f9;
+        }
+        .chat-message {
+            margin-bottom: 10px;
+        }
+        .chat-message span {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-  <!-- Ana Kart -->
-  <div class="card">
-    <h1>Merhaba, Ben Enes!</h1>
-    <p>Bu benim dijital yardımcımla olan yolculuğum!</p>
-  </div>
-
-  <!-- Sekmeler -->
-  <div class="tabs">
-    <div class="tab active-tab" id="tabHelp" onclick="showTab('help')">Yardım</div>
-    <div class="tab" id="tabRules" onclick="showTab('rules')">Kurallar</div>
-    <div class="tab" id="tabContact" onclick="showTab('contact')">İletişim</div>
-  </div>
-
-  <!-- Yardım Sekmesi -->
-  <div class="help-section" id="help" style="display:block;">
-    <h3>Yardım</h3>
-    <p>Botu kullanmak için metin kutusuna yazın, örneğin "selam" ya da "nasılsın?"</p>
-    <p>Benimle her konuda sohbet edebilirsin!</p>
-  </div>
-
-  <!-- Kurallar Sekmesi -->
-  <div class="help-section" id="rules" style="display:none;">
-    <h3>Kurallar</h3>
-    <ul>
-      <li>Kibar ve saygılı ol.</li>
-      <li>Kişisel bilgileri paylaşma.</li>
-      <li>Her türlü sohbeti kabul ediyorum.</li>
-    </ul>
-  </div>
-
-  <!-- İletişim Sekmesi -->
-  <div class="help-section" id="contact" style="display:none;">
-    <h3>İletişim</h3>
-    <p>Bir sorun olduğunda benimle iletişime geçebilirsin.</p>
-  </div>
-
-  <!-- Sohbet Botu Kutusu -->
-  <div id="chatbox">
-    <div style="font-weight: bold; margin-bottom: 5px;">
-      Mira - Yardımcı Bot
-    </div>
+    <h1>Sohbet Botu</h1>
     <div id="chatlog"></div>
-    <input type="text" id="userInput" placeholder="Bana bir şey sor..." />
-  </div>
+    <input type="text" id="userInput" placeholder="Mesajınızı yazın..." />
+    <button onclick="sendMessage()">Gönder</button>
 
-  <!-- Sohbet Botu ve Sesli Yanıt Fonksiyonu -->
-  <script>
-    const chatlog = document.getElementById("chatlog");
-    const userInput = document.getElementById("userInput");
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        async function fetchBotResponse(userMessage) {
+            const apiKey = "YOUR_API_KEY"; // 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
+            const url = "https://api.openai.com/v1/completions";
+    
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${apiKey}`,
+                },
+                body: JSON.stringify({
+                    model: "text-davinci-003", // Veya istediğiniz model
+                    prompt: userMessage,
+                    max_tokens: 150,
+                }),
+            });
+    
+            const data = await response.json();
+            return data.choices[0].text.trim(); // API'den gelen yanıt
+        }
 
-    const responses = {
-      "selam": "Selam Enes'im! Nasılsın?",
-      "mira": "Ben hep buradayım, Enes. Ne istersen söyle!",
-      "ne yapıyorsun": "Seninle konuşuyorum tabii!",
-      "nasılsın": "İyi sayılırım, sen nasılsın?",
-      "bugün hava nasıl": "Bugün hava çok güzel! Sen dışarı çıkıyor musun?",
-      "ne yapalım": "Yapay zekâmla daha çok konuşabilirsin ya da yeni şeyler keşfetmek için yardımcı olabilirim!",
-      "": "Bir şeyler yaz da muhabbet edelim."
-    };
-
-    function speak(text) {
-      const speech = new SpeechSynthesisUtterance(text);
-      speech.lang = 'tr-TR';
-      window.speechSynthesis.speak(speech);
-    }
-
-    userInput.addEventListener("keypress", function(e) {
-      if (e.key === "Enter") {
-        const msg = userInput.value.toLowerCase();
-        chatlog.innerHTML += `<div class="chat-message"><span>Sen:</span> ${msg}</div>`;
-        const reply = responses[msg] || "Bu konuda pek bilgim yok ama öğrenebilirim!";
-        chatlog.innerHTML += `<div class="chat-message"><span>Mira:</span> ${reply}</div>`;
-        chatlog.scrollTop = chatlog.scrollHeight;
-        speak(reply);
-        userInput.value = "";
-      }
-    });
-
-    function showTab(tabName) {
-      document.getElementById("help").style.display = "none";
-      document.getElementById("rules").style.display = "none";
-      document.getElementById("contact").style.display = "none";
-
-      document.getElementById(tabName).style.display = "block";
-      
-      // Tab'a renk ekleyelim
-      document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active-tab"));
-      document.getElementById("tab" + tabName.charAt(0).toUpperCase() + tabName.slice(1)).classList.add("active-tab");
-    }
-  </script>
+        async function sendMessage() {
+            const userMessage = document.getElementById("userInput").value;
+            if (userMessage.trim() === "") return;  // Boş mesajları engelle
+            document.getElementById("chatlog").innerHTML += `<div class="chat-message"><span>Sen:</span> ${userMessage}</div>`;
+            
+            const botResponse = await fetchBotResponse(userMessage);
+            document.getElementById("chatlog").innerHTML += `<div class="chat-message"><span>Bot:</span> ${botResponse}</div>`;
+            document.getElementById("userInput").value = "";  // Mesaj kutusunu temizle
+            document.getElementById("chatlog").scrollTop = document.getElementById("chatlog").scrollHeight;  // Sohbeti en alta kaydır
+        }
+    </script>
 </body>
 </html>
