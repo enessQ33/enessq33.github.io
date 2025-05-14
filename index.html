@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enes'in Dijital Kartı</title>
+  <title>Enes'in Dijital Yardımcısı</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -14,7 +14,7 @@
       font-family: 'Poppins', sans-serif;
       height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       overflow: hidden;
     }
@@ -37,16 +37,29 @@
       margin-bottom: 10px;
     }
 
-    p {
-      font-size: 18px;
-      color: #ccc;
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
     }
 
-    @keyframes fadeIn {
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
+    .tab {
+      margin: 0 15px;
+      padding: 10px 20px;
+      background: #333;
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .tab:hover {
+      background: #00e676;
+    }
+
+    .active-tab {
+      background: #00e676;
     }
 
     #chatbox {
@@ -90,16 +103,30 @@
       box-shadow: 0 0 10px #00e676;
     }
 
-    #chatbox:hover {
-      box-shadow: 0 10px 20px rgba(0, 255, 0, 0.4);
-    }
-
     .chat-message {
       margin-bottom: 10px;
     }
 
     .chat-message span {
       font-weight: bold;
+    }
+
+    .help-section {
+      margin-top: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 15px;
+      width: 300px;
+      text-align: left;
+      font-size: 14px;
+      box-shadow: 0 4px 10px rgba(0, 255, 0, 0.3);
+    }
+
+    @keyframes fadeIn {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
 
     @media screen and (max-width: 768px) {
@@ -115,7 +142,37 @@
   <!-- Ana Kart -->
   <div class="card">
     <h1>Merhaba, Ben Enes!</h1>
-    <p>Bu benim ilk web sitem. Buradan çok şey başlatacağım!</p>
+    <p>Bu benim dijital yardımcımla olan yolculuğum!</p>
+  </div>
+
+  <!-- Sekmeler -->
+  <div class="tabs">
+    <div class="tab active-tab" id="tabHelp" onclick="showTab('help')">Yardım</div>
+    <div class="tab" id="tabRules" onclick="showTab('rules')">Kurallar</div>
+    <div class="tab" id="tabContact" onclick="showTab('contact')">İletişim</div>
+  </div>
+
+  <!-- Yardım Sekmesi -->
+  <div class="help-section" id="help" style="display:block;">
+    <h3>Yardım</h3>
+    <p>Botu kullanmak için metin kutusuna yazın, örneğin "selam" ya da "nasılsın?"</p>
+    <p>Benimle her konuda sohbet edebilirsin!</p>
+  </div>
+
+  <!-- Kurallar Sekmesi -->
+  <div class="help-section" id="rules" style="display:none;">
+    <h3>Kurallar</h3>
+    <ul>
+      <li>Kibar ve saygılı ol.</li>
+      <li>Kişisel bilgileri paylaşma.</li>
+      <li>Her türlü sohbeti kabul ediyorum.</li>
+    </ul>
+  </div>
+
+  <!-- İletişim Sekmesi -->
+  <div class="help-section" id="contact" style="display:none;">
+    <h3>İletişim</h3>
+    <p>Bir sorun olduğunda benimle iletişime geçebilirsin.</p>
   </div>
 
   <!-- Sohbet Botu Kutusu -->
@@ -133,8 +190,8 @@
     const userInput = document.getElementById("userInput");
 
     const responses = {
-      "selam": "Selam Enes’im! Nasılsın?",
-      "mira": "Ben hep buradayım Enes. Ne istersen söyle!",
+      "selam": "Selam Enes'im! Nasılsın?",
+      "mira": "Ben hep buradayım, Enes. Ne istersen söyle!",
       "ne yapıyorsun": "Seninle konuşuyorum tabii!",
       "nasılsın": "İyi sayılırım, sen nasılsın?",
       "bugün hava nasıl": "Bugün hava çok güzel! Sen dışarı çıkıyor musun?",
@@ -144,7 +201,7 @@
 
     function speak(text) {
       const speech = new SpeechSynthesisUtterance(text);
-      speech.lang = 'tr-TR'; // Türkçe konuşma
+      speech.lang = 'tr-TR';
       window.speechSynthesis.speak(speech);
     }
 
@@ -155,10 +212,22 @@
         const reply = responses[msg] || "Bu konuda pek bilgim yok ama öğrenebilirim!";
         chatlog.innerHTML += `<div class="chat-message"><span>Mira:</span> ${reply}</div>`;
         chatlog.scrollTop = chatlog.scrollHeight;
-        speak(reply); // Yanıtı sesli olarak söyle
+        speak(reply);
         userInput.value = "";
       }
     });
+
+    function showTab(tabName) {
+      document.getElementById("help").style.display = "none";
+      document.getElementById("rules").style.display = "none";
+      document.getElementById("contact").style.display = "none";
+
+      document.getElementById(tabName).style.display = "block";
+      
+      // Tab'a renk ekleyelim
+      document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active-tab"));
+      document.getElementById("tab" + tabName.charAt(0).toUpperCase() + tabName.slice(1)).classList.add("active-tab");
+    }
   </script>
 </body>
 </html>
