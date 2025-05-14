@@ -2,6 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Enes'in Dijital Kartı</title>
   <style>
     body {
@@ -16,11 +17,125 @@
       align-items: center;
       overflow: hidden;
     }
+
     .card {
-      background: #222;
+      background: rgba(34, 34, 34, 0.9);
       padding: 40px;
       border-radius: 16px;
       box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
       text-align: center;
       animation: fadeIn 2s ease-in-out forwards;
-      transform: translateY(50px
+      transform: translateY(50px);
+      opacity: 0;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      color: #0f0;
+    }
+
+    p {
+      font-size: 20px;
+      color: #ccc;
+    }
+
+    @keyframes fadeIn {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    #chatbox {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      background: #111;
+      color: #fff;
+      border: 1px solid #0f0;
+      border-radius: 10px;
+      padding: 10px;
+      font-family: monospace;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    }
+
+    #chatlog {
+      height: 150px;
+      overflow-y: auto;
+      background: #000;
+      padding: 5px;
+      font-size: 14px;
+    }
+
+    #userInput {
+      width: 100%;
+      margin-top: 5px;
+      padding: 5px;
+      background: #222;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+    }
+
+    @media screen and (max-width: 768px) {
+      #chatbox {
+        width: 250px;
+        bottom: 10px;
+        right: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Ana Kart -->
+  <div class="card">
+    <h1>Merhaba, Ben Enes!</h1>
+    <p>Bu benim ilk web sitem. Buradan çok şey başlatacağım!</p>
+  </div>
+
+  <!-- Sohbet Botu Kutusu -->
+  <div id="chatbox">
+    <div style="font-weight: bold; margin-bottom: 5px;">
+      Mira - Yardımcı Bot
+    </div>
+    <div id="chatlog"></div>
+    <input type="text" id="userInput" placeholder="Bana bir şey sor..." />
+  </div>
+
+  <!-- Sohbet Botu ve Sesli Yanıt Fonksiyonu -->
+  <script>
+    const chatlog = document.getElementById("chatlog");
+    const userInput = document.getElementById("userInput");
+
+    const responses = {
+      "selam": "Selam Enes’im! Nasılsın?",
+      "mira": "Ben hep buradayım Enes. Ne istersen söyle!",
+      "ne yapıyorsun": "Seninle konuşuyorum tabii!",
+      "nasılsın": "İyi sayılırım, sen nasılsın?",
+      "bugün hava nasıl": "Bugün hava çok güzel! Sen dışarı çıkıyor musun?",
+      "ne yapalım": "Yapay zekâmla daha çok konuşabilirsin ya da yeni şeyler keşfetmek için yardımcı olabilirim!",
+      "": "Bir şeyler yaz da muhabbet edelim."
+    };
+
+    function speak(text) {
+      const speech = new SpeechSynthesisUtterance(text);
+      speech.lang = 'tr-TR'; // Türkçe konuşma
+      window.speechSynthesis.speak(speech);
+    }
+
+    userInput.addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        const msg = userInput.value.toLowerCase();
+        chatlog.innerHTML += `<div><b>Sen:</b> ${msg}</div>`;
+        const reply = responses[msg] || "Bu konuda pek bilgim yok ama öğrenebilirim!";
+        chatlog.innerHTML += `<div><b>Mira:</b> ${reply}</div>`;
+        chatlog.scrollTop = chatlog.scrollHeight;
+        speak(reply); // Yanıtı sesli olarak söyle
+        userInput.value = "";
+      }
+    });
+  </script>
+</body>
+</html>
