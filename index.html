@@ -1,24 +1,106 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Yapay Enes</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 500px;
-      margin: 50px auto;
-      padding: 20px;
-      background: #f0f0f0;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    input[type="text"] {
-      width: 80%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      padding: 10px
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Yapay Enes Chat</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+
+  body {
+    font-family: 'Comfortaa', cursive;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  #chat-container {
+    background: rgba(0,0,0,0.3);
+    width: 400px;
+    max-width: 90vw;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  #messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .msg {
+    max-width: 75%;
+    padding: 12px 18px;
+    border-radius: 20px;
+    line-height: 1.4;
+    font-size: 16px;
+    word-wrap: break-word;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+
+  .msg.user {
+    align-self: flex-end;
+    background: #6a82fb;
+    border-bottom-right-radius: 0;
+  }
+
+  .msg.bot {
+    align-self: flex-start;
+    background: #a17fe0;
+    border-bottom-left-radius: 0;
+  }
+
+  #input-area {
+    display: flex;
+    padding: 15px;
+    background: rgba(0,0,0,0.2);
+  }
+
+  #mesaj {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border-radius: 30px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+  }
+
+  #gonder-btn {
+    margin-left: 10px;
+    background: #4e54c8;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  #gonder-btn:hover {
+    background: #434aa8;
+  }
+</style>
+</head>
+<body>
+
+<div id="chat-container">
+  <div id="messages"></div>
+  <div id="input-area">
+    <input type="text" id="mesaj" placeholder="Mesajını yaz..." autocomplete="off" />
+    <button id="gonder-btn">Gönder</button>
+  </div>
+</div>
+
+<script>
+  const mesajInput = document.getElementById('
