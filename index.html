@@ -1,32 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Yapay Enes</title>
+  <style>
+    body {
+      background: #121212;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0 1rem;
+    }
+    h1 {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #00d8ff;
+    }
+    input[type="text"] {
+      width: 100%;
+      max-width: 400px;
+      padding: 0.75rem 1rem;
+      border-radius: 25px;
+      border: none;
+      font-size: 1rem;
+      outline: none;
+      margin-bottom: 1rem;
+      background: #1f1f1f;
+      color: #fff;
+      box-shadow: 0 0 10px #00d8ff66;
+      transition: box-shadow 0.3s ease;
+    }
+    input[type="text"]:focus {
+      box-shadow: 0 0 15px #00eaffcc;
+    }
+    button {
+      background: #00d8ff;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 25px;
+      font-weight: 700;
+      color: #121212;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+      box-shadow: 0 4px 10px #00d8ffaa;
+    }
+    button:hover {
+      background: #00b3cc;
+    }
+    #cevap {
+      margin-top: 2rem;
+      max-width: 400px;
+      text-align: center;
+      font-size: 1.1rem;
+      min-height: 40px;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      background: #222222cc;
+      box-shadow: inset 0 0 5px #00d8ff99;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
 </head>
 <body>
   <h1>Yapay Enes'e Mesaj Gönder</h1>
-  
-  <input type="text" id="mesaj" placeholder="Mesajını yaz">
+
+  <input type="text" id="mesaj" placeholder="Mesajını yaz" autocomplete="off" />
   <button onclick="gonder()">Gönder</button>
-  
+
   <p id="cevap"></p>
 
   <script>
     async function gonder() {
-      const mesaj = document.getElementById("mesaj").value;
-
-      const cevap = await fetch("https://e8096b18-05b9-4524-b302-a50d1719cbd0-00-1n9ek04qj0cvu.sisko.replit.dev/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ message: mesaj })
-      });
-
-      const veri = await cevap.json();
-      document.getElementById("cevap").innerText = veri.response;
-    }
-  </script>
-</body>
-</html>
+      const mesaj = document.getElementById("mesaj").value.trim();
+      if (!mesaj) {
+        alert("Bir mesaj yaz, Enes!");
+        return;
+      }
+      document.getElementById("cevap").innerText = "Düşünüyorum...";
+      try {
+        const cevap = await fetch("https://e8096b18-05b9-4524-b302-a50d1719cbd0-00-1n9ek04qj0cvu.sisko.replit.dev/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ message: mesaj })
+        });
+        const veri = await
