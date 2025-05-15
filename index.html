@@ -1,79 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sohbet Botu</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        #chatlog {
-            width: 80%;
-            margin: 20px auto;
-            padding: 10px;
-            border: 1px solid #ddd;
-            height: 400px;
-            overflow-y: scroll;
-            background-color: #f9f9f9;
-        }
-        .chat-message {
-            margin-bottom: 10px;
-        }
-        .chat-message span {
-            font-weight: bold;
-        }
-        input[type="text"] {
-            width: 70%;
-            padding: 10px;
-            margin-top: 10px;
-        }
-        button {
-            padding: 10px;
-            margin-left: 10px;
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Yapay Enes</title>
 </head>
 <body>
-    <h1>Sohbet Botu</h1>
-    <div id="chatlog"></div>
-    <input type="text" id="userInput" placeholder="Mesajınızı yazın..." />
-    <button onclick="sendMessage()">Gönder</button>
+  <h1>Yapay Enes'e Mesaj Gönder</h1>
+  
+  <input type="text" id="mesaj" placeholder="Mesajını yaz">
+  <button onclick="gonder()">Gönder</button>
+  
+  <p id="cevap"></p>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        async function fetchBotResponse(userMessage) {
-            const apiKey = "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";
-            const url = "https://api.openai.com/v1/completions";
-    
-            const response = await fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${apiKey}`,
-                },
-                body: JSON.stringify({
-                    model: "text-davinci-003", // Veya istediğiniz model
-                    prompt: userMessage,
-                    max_tokens: 150,
-                }),
-            });
-    
-            const data = await response.json();
-            return data.choices[0].text.trim(); // API'den gelen yanıt
-        }
+  <script>
+    async function gonder() {
+      const mesaj = document.getElementById("mesaj").value;
 
-        async function sendMessage() {
-            const userMessage = document.getElementById("userInput").value;
-            if (userMessage.trim() === "") return;  // Boş mesajları engelle
-            document.getElementById("chatlog").innerHTML += `<div class="chat-message"><span>Sen:</span> ${userMessage}</div>`;
-            
-            const botResponse = await fetchBotResponse(userMessage);
-            document.getElementById("chatlog").innerHTML += `<div class="chat-message"><span>Bot:</span> ${botResponse}</div>`;
-            document.getElementById("userInput").value = "";  // Mesaj kutusunu temizle
-            document.getElementById("chatlog").scrollTop = document.getElementById("chatlog").scrollHeight;  // Sohbeti en alta kaydır
-        }
-    </script>
+      const cevap = await fetch("https://senin-replit-linkin.repl.co/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: mesaj })
+      });
+
+      const veri = await cevap.json();
+      document.getElementById("cevap").innerText = veri.response;
+    }
+  </script>
 </body>
 </html>
+        
